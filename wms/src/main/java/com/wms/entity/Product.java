@@ -44,7 +44,8 @@ public class Product {
 	private String description;
 	
 	
-	@Column(nullable=false, columnDefinition=" default CURRENT_TIMESTAMP")
+	
+	@Column(name="addedAt")
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime addedAt;
 	

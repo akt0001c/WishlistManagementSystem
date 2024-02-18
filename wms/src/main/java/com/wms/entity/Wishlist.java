@@ -31,11 +31,13 @@ public class Wishlist {
 	@Column(name="wid")
 	private Integer wid;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
-	@JoinColumn(name="userId",referencedColumnName="userId")
+	
+	@OneToOne( cascade=CascadeType.PERSIST)
+	@JoinColumn(name="userId" ,columnDefinition="INT")
 	private User user;
 	
 	
+	@Column(name="createdAt")
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime createdAt;
 	

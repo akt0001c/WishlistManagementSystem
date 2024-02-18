@@ -28,12 +28,13 @@ public class WishlistDetails {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="wdId")
 	private Integer wdId;
 	
 	@Column(nullable=false,columnDefinition="INT default 1")
 	private Integer quantity;
 	
-	@Column(columnDefinition="enum('Added','Purcheshed) default 'Added' ")
+	@Column(columnDefinition="enum('Added','Purcheshed') default 'Added' ")
 	private WishlistProductStatus status;
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)
