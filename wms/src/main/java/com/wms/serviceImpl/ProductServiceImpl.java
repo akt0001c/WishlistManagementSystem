@@ -3,6 +3,10 @@ package com.wms.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.wms.entity.Product;
@@ -44,9 +48,33 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getAllProduct() {
+	public List<Product> getAllProduct(String field,String direction,Integer pageno,Integer records) {
 		
-		return null;
+		log.info("Service getAllProduct started...");
+		
+		if(field==null)
+			 field="addedAt";
+		
+		if(direction ==null)
+			 direction= "desc";
+		
+		if(pageno==null)
+			 pageno=1;
+		
+		if(records==null)
+			records=10;
+		
+        Sort sort= direction.equalsIgnoreCase("asc")?Sort.by(field).ascending():Sort.by(field).descending();
+        
+       
+		
+		Pageable pb= PageRequest.of(pageno-1, records, sort);
+		 Page<Product> page= prepo.findAll(pb);
+		 
+		 List<Product> res= page.getContent();
+		 
+		 log.info("service response ,Product list found sucessfully");
+		return res;
 	}
 
 }
