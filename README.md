@@ -1,5 +1,6 @@
 
 # Project Title
+ ## Wish List Management System
  
 ## Introduction
 Welcome to the Wishlist Management System, a robust and efficient application for managing user wishlists, products, and more. This project is built using Spring Boot, JPA-Hibernate, MySQL for database storage, and Spring Security for ensuring secure access to the system.
@@ -16,10 +17,10 @@ my-app/
  ...
 
 ## Video Walkthrough of the project
-Attach a very short video walkthough of all of the features [ 1 - 3 minutes ]
+
 
 ## Video Walkthrough of the codebase
-Attach a very short video walkthough of codebase [ 1 - 5 minutes ]
+
 
 ## Features
 - User Management: Create and manage user accounts with ease.
@@ -29,16 +30,24 @@ Attach a very short video walkthough of codebase [ 1 - 5 minutes ]
 - Security: Utilize Spring Security to ensure a secure and protected environment.
 
 ## design decisions or assumptions
-List your design desissions & assumptions
+### db digram
+![wmsdb](https://github.com/akt0001c/WishlistManagementSystem/assets/110126989/0df11d91-4d87-4816-b7df-be1f30d4289b)
+### db assumptions doc
+[----- WishlistManagementSystem ----.txt](https://github.com/akt0001c/WishlistManagementSystem/files/14333013/-----.WishlistManagementSystem.----.txt)
 
 ## Installation & Getting started
-Detailed instructions on how to install, configure, and get the project running. For BE/FS projects, guide the reviewer how to check MYSQL schema etc.
-
-```bash
-npm install my-project
-cd my-project
-npm start
+ ### Clone the repository
+Detailed instructions on how to install ,import the database, configure, and get the project running.
+### Import the database
+  - Create an empty database
+  - download dbname.sql file from Repository and save it on your system somewhere
+  #### Open the terminal and follow below steps to import database
+```CD C:\Program Files\MySQL\MySQL Server 8.0\bin
+   mysql -u username -p database_name < desiredplace\dbname.sql   
 ```
+- These steps will help you to setup database on your sytem 
+
+### Now you can run springBoot application using tools like sts,intellige 
 
 ## Usage
 Provide instructions and examples on how to use your project.
