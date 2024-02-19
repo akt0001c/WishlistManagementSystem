@@ -3,6 +3,7 @@ package com.wms.config;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,7 +31,7 @@ private MyUserDetailsService muservice;
 
 	
 
-	
+@Autowired	
 public ApplicationConfig(MyUserDetailsService muservice) {
 	super();
 	this.muservice = muservice;
