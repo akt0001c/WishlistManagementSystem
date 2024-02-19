@@ -3,6 +3,7 @@ package com.wms.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.wms.entity.Product;
 import com.wms.entity.User;
@@ -16,6 +17,7 @@ import com.wms.repository.UserRepository;
 import com.wms.repository.WishlistRepository;
 import com.wms.service.WishlistService;
 
+@Service 
 public class WishlistServiceImpl implements WishlistService {
 
 	private UserRepository urepo;
