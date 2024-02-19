@@ -1,6 +1,6 @@
 
 # Project Title
- ## Wish List Management System
+ ## WishList Management System
  
 ## Introduction
 Welcome to the Wishlist Management System, a robust and efficient application for managing user wishlists, products, and more. This project is built using Spring Boot, JPA-Hibernate, MySQL for database storage, and Spring Security for ensuring secure access to the system.
