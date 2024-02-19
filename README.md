@@ -46,7 +46,7 @@ Detailed instructions on how to install ,import the database, configure, and get
    mysql -u username -p database_name < desiredplace\dbname.sql   
 ```
 - These steps will help you to setup database on your sytem
-### Before testing wishlist endpoint for manage wishlist , frist add Product using product endpoints
+### Before testing wishlist endpoint for manage wishlist , first add Product using product endpoints then provide valid product id while calling wishlist endpoints 
 
 ### Now you can run springBoot application using tools like sts,intellige 
 
