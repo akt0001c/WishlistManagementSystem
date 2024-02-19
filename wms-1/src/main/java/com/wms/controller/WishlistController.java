@@ -31,10 +31,11 @@ public WishlistService wservice;
 public ResponseEntity<String> addItem(@RequestBody Integer pid ,Authentication auth){
 	
 	log.info("Wishlist conroller for add item in wishlist started...");
-	if(auth.getName()==null)
+	String email=auth.getName();
+	if(email==null)
 		   throw new UserNotLoggedException("User should be logged in ");
 	String res= null;
-	res= wservice.addItem(pid,auth.getName());
+	res= wservice.addItem(pid,email);
 	log.info("Wishlist controller response , item added in wishlist");
 	return new ResponseEntity<>(res,HttpStatus.CREATED);
 }
@@ -43,11 +44,12 @@ public ResponseEntity<String> addItem(@RequestBody Integer pid ,Authentication a
 @DeleteMapping("/wishlists/{id}")
 public ResponseEntity<String> removeItem(@PathVariable("id") Integer pid ,Authentication auth){
 	log.info("wishlist controller for removing the item started...");
-	if(auth.getName()==null)
+	String email= auth.getName(); 
+	if(email==null)
 		   throw new UserNotLoggedException("User should be logged in ");
 	
 	String res=null;
-	res= wservice.removeItem(pid,auth.getName());
+	res= wservice.removeItem(pid,email);
 	log.info("wishlist controller response , item removed form wishlist");
 	return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
 }
@@ -56,11 +58,12 @@ public ResponseEntity<String> removeItem(@PathVariable("id") Integer pid ,Authen
 public ResponseEntity<Wishlist> getUserWishlist(Authentication auth){
 	
 	log.info("Wishlist controller to get complete a wishlist for logged user started...");
-	if(auth.getName()==null)
+	String email= auth.getName();
+	if(email==null)
 		   throw new UserNotLoggedException("User should be logged in ");
 	
 	Wishlist res= null;
-	res= wservice.getAllWishListItem(auth.getName());
+	res= wservice.getAllWishListItem(email);
 	log.info("Wishlist controller reponse ,user wishlist found sucessfully");
 	return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
 }
