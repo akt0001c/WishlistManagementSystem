@@ -11,15 +11,14 @@ Welcome to the Wishlist Management System, a robust and efficient application fo
 
 
 ## Directory Structure
+```
 my-app/
 ├─ wms1(Backend)/
+|-- dbname.sql(dbfile)
+```
+ 
 
- ...
 
-## Video Walkthrough of the project
-
-
-## Video Walkthrough of the codebase
 
 
 ## Features
@@ -42,31 +41,50 @@ Detailed instructions on how to install ,import the database, configure, and get
   - Create an empty database
   - download dbname.sql file from Repository and save it on your system somewhere
   #### Open the terminal and follow below steps to import database
-```CD C:\Program Files\MySQL\MySQL Server 8.0\bin
+```
+   CD C:\Program Files\MySQL\MySQL Server 8.0\bin
    mysql -u username -p database_name < desiredplace\dbname.sql   
 ```
 - These steps will help you to setup database on your sytem 
 
 ### Now you can run springBoot application using tools like sts,intellige 
 
-## Usage
-Provide instructions and examples on how to use your project.
 
-```bash
-# Example
-```
-
-Include screenshots as necessary.
 
 ## Credentials
-Provide user credentials for autheticated pages
+ ### Before Running project first set properties file  , one example of properties file is below  
+ ```
+  server.port=8080
+
+#db specific properties
+spring.datasource.name=db_name
+spring.datasource.url=jdbc:mysql://localhost:3306/db_name
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username=root
+spring.datasource.password= your password
+
+#ORM system specific properties
+#spring.jpa.generate-ddl=true
+#spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.show-sql=true
+```
 
 
 
 ## API Endpoints
-In case of Backend Applications provide a list of your API endpoints, methods, brief descriptions, and examples of request/response.
-GET /api/items - retrieve all items
-POST /api/items - create a new item
+### user
+   - Post:: /api/signUp
+   - Get:: /api/logIn
+
+### Product
+  - Post:: /api/add/product (Request body - Product product)
+  - Get:: /api/get/products
+  - Delete:: /api/product/{pid}  (PathVariable (pid)= ProductId)
+
+### Wishlist
+  - Post:: /api/wishlists (RequestParam("pid") -  {Integer pid} )
+  - Delete:: /api/wishlists/{id}  (id-> Product Id)
+  - Get:: /api/wishlists
 
 
 ## Technology Stack
