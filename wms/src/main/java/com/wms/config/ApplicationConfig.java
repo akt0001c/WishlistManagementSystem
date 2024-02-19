@@ -69,6 +69,7 @@ public SecurityFilterChain mySercurityFilterchainHandler(HttpSecurity http) thro
 	 .authorizeHttpRequests(auth->{
 		 
 		 auth.requestMatchers(HttpMethod.POST,"/api/signUp").permitAll()
+		     .requestMatchers("/swagger-ui*/**","/v3/api-docs/**").permitAll()
 		     .anyRequest().authenticated();
 	 })
 	 
