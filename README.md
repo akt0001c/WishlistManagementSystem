@@ -45,7 +45,8 @@ Detailed instructions on how to install ,import the database, configure, and get
    CD C:\Program Files\MySQL\MySQL Server 8.0\bin
    mysql -u username -p database_name < desiredplace\dbname.sql   
 ```
-- These steps will help you to setup database on your sytem 
+- These steps will help you to setup database on your sytem
+### Before testing wishlist endpoint for manage wishlist , frist add Product using product endpoints
 
 ### Now you can run springBoot application using tools like sts,intellige 
 
