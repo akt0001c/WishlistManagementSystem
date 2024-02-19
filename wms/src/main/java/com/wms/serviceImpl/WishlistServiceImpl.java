@@ -39,6 +39,15 @@ public class WishlistServiceImpl implements WishlistService {
 		this.wrepo = wrepo;
 	}
 
+	
+	/**
+	 * This method is used to add product item into the logged user wishlist 
+	 * Here we need to pass valid product id which is already added into the database and email will be take form authentication 
+	 * @author Ankit Choubey
+	 * @param Integer product id(pid), String email (which will be obtain from authentcation object internally)
+	 * @return String with message
+	 * @exception UserNOtLoggedException, SomethingwentWrongException,ProductNotFoundException
+	 */
 	@Override
 	public String addItem(Integer pid, String email) {
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
@@ -57,6 +66,13 @@ public class WishlistServiceImpl implements WishlistService {
 		return "Item added in wishlist sucessfully";
 	}
 
+	/**
+	 * It is used to get complete wishlist object for a logged user
+	 * @author Ankit choubey
+	 * @param String email(From Authentication object)
+	 * @return Wishlist object
+	 * @exception UserNotLoggedException,SomethingwentWrongException
+	 */
 	@Override
 	public Wishlist getAllWishListItem(String email) {
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
@@ -64,24 +80,31 @@ public class WishlistServiceImpl implements WishlistService {
 		return wishlist;
 	}
 
+	
+	/**
+	 * It is used to remove an item from wishlist using product id 
+	 * @author Ankit Choubey
+	 * @param Integer productid(pid),String email
+	 * @return String message 
+	 * @exception UserNotLoggedException,SomethingwentWrongException
+	 */
 	@Override
 	public String removeItem(Integer pid, String email) {
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
 		List<WishlistDetails> wlist= wishlist.getWishlistDetails();
-		for(WishlistDetails ob :wlist)
-		{
-			if(ob.getProduct().getPid()==pid)
-			{
-				wlist.remove(ob);
-				break;
-			}
-		}
+		
+		boolean res=wlist.removeIf(ob->ob.getProduct().getPid()==pid);
 		
 		wishlist.setWishlistDetails(wlist);
 		
 		wrepo.save(wishlist);
+		
+		if(res==true)
 		return "Item has been removed from the wishlist";
+		else {
+			return "Item cannot be removed";
+		}
 	}
 
 }
