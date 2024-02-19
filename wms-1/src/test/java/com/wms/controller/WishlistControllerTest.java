@@ -97,17 +97,18 @@ public class WishlistControllerTest {
    
    @Test
    void getUserWishlist_Success() { 
-	   Authentication auth= new UsernamePasswordAuthenticationToken("akt00071000@gmail.com", "Ankit12345");
-	   Wishlist ob = new Wishlist();
-	   ob.setWid(1);
-	   
-	  Mockito.when(wService.getAllWishListItem(anyString())).thenReturn(ob);
-	   ResponseEntity<Wishlist> res= wController.getUserWishlist(auth);
-	   
-	   assertEquals(HttpStatus.ACCEPTED, res.getStatusCode());
-	   assertEquals(1,res.getBody().getWid());
-	   
-	   verify(wService,times(1)).getAllWishListItem("akt0007100@gmail.com");
+	   Authentication auth = new UsernamePasswordAuthenticationToken("akt00071000@gmail.com", "Ankit12345");
+	    Wishlist ob = new Wishlist();
+	    ob.setWid(1);
+
+	    Mockito.when(wService.getAllWishListItem(anyString())).thenReturn(ob);
+
+	    ResponseEntity<Wishlist> res = wController.getUserWishlist(auth);
+
+	    assertEquals(HttpStatus.ACCEPTED, res.getStatusCode());
+	    assertEquals(1, res.getBody().getWid());
+
+	    verify(wService, times(1)).getAllWishListItem("akt00071000@gmail.com");
 	   
    } 
 

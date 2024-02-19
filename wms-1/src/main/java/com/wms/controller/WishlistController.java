@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wms.entity.Wishlist;
@@ -28,7 +29,7 @@ public WishlistService wservice;
 
 
 @PostMapping("/wishlists")
-public ResponseEntity<String> addItem(@RequestBody Integer pid ,Authentication auth){
+public ResponseEntity<String> addItem(@RequestParam("pid") Integer pid ,Authentication auth){
 	
 	log.info("Wishlist conroller for add item in wishlist started...");
 	String email=auth.getName();
