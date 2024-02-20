@@ -27,7 +27,7 @@ CREATE TABLE `product` (
   `pimage` varchar(255) NOT NULL,
   `pname` varchar(50) NOT NULL,
   `description` text,
-  `addedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -71,17 +71,17 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `userId` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `mobno` varchar(20) NOT NULL,
   `location` varchar(40) DEFAULT NULL,
-  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
-  `addedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`userId`),
+  `status` enum('Active','Inactive') DEFAULT 'Active',
+  `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,6 +90,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (5,'Ankit choubey ','Ankit@gmail.com','$2a$10$pblZJe.5rYK9t6pwQtB5jOlWmbC2BcurI8AeqKd8eAcOGTJ11gEle','1234567893','Uttarakhand','Active','2024-02-20 03:57:28');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,12 +103,12 @@ DROP TABLE IF EXISTS `wishlist`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wishlist` (
   `wid` int NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `userId` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`wid`),
-  UNIQUE KEY `userId` (`userId`),
-  CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `userId` (`user_id`),
+  CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +117,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+INSERT INTO `wishlist` VALUES (4,'2024-02-20 03:57:28',5);
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,13 +129,13 @@ DROP TABLE IF EXISTS `wishlist_details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `wishlist_details` (
-  `wdId` int NOT NULL AUTO_INCREMENT,
+  `wd_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
   `wishlist_id` int NOT NULL,
   `status` enum('Added','Purchesed') DEFAULT 'Added',
   `quantity` int NOT NULL DEFAULT '1',
-  `addedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wdId`),
+  `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wd_id`),
   KEY `product_id` (`product_id`),
   KEY `wishlist_id` (`wishlist_id`),
   CONSTRAINT `wishlist_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -159,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-19 20:46:37
+-- Dump completed on 2024-02-20  9:54:58
