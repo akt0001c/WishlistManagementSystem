@@ -2,6 +2,9 @@ package com.wms.entity;
 
 import java.time.LocalDateTime;
 
+
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,6 +27,20 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
+
+/**
+ * user body : {
+ * "email":"Ankit@gmail.com",
+    "name":"Ankit choubey ",
+    "password":"Ankit@123",
+    "mobno":"1234567893",
+    "location":"Uttarakhand"
+ * }
+ * @author ankit
+ *
+ */
 
 @Entity
 @Data

@@ -54,7 +54,7 @@ public class JwtTokenGeneratorFilter  extends OncePerRequestFilter{
 					      .subject("jwt token")
 					      .claim("username", auth.getName())
 					      .claim("authorities",populateAuthorities(auth.getAuthorities()))
-					      .expiration(new Date(new Date().getTime()+360000))
+					      .expiration(new Date(new Date().getTime()+360000000))
 					      .signWith(key).compact();
 			
 			response.setHeader(SecurityConstrants.JWT_HEADER, jwt);
