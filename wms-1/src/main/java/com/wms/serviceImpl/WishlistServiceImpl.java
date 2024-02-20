@@ -16,6 +16,7 @@ import com.wms.exceptions.SomethingwentWrongException;
 import com.wms.exceptions.UserNotLoggedException;
 import com.wms.repository.ProductRepository;
 import com.wms.repository.UserRepository;
+import com.wms.repository.WishlistDetailsRepository;
 import com.wms.repository.WishlistRepository;
 import com.wms.service.WishlistService;
 
@@ -27,7 +28,13 @@ public class WishlistServiceImpl implements WishlistService {
 	private UserRepository urepo;
 	private WishlistRepository wrepo;
 	private ProductRepository prepo;
+	private WishlistDetailsRepository wdrepo;
 	
+	@Autowired
+	public void setWdrepo(WishlistDetailsRepository wdrepo) {
+		this.wdrepo = wdrepo;
+	}
+
 	@Autowired
 	public void setPrepo(ProductRepository prepo) {
 		this.prepo = prepo;
@@ -58,15 +65,18 @@ public class WishlistServiceImpl implements WishlistService {
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
 		Product product = prepo.findById(pid).orElseThrow(()->new ProductNotFoundException("Product not found for id :"+pid));
 		wishlist.setUser(user);
+		
 		WishlistDetails wd= new WishlistDetails();
+		wd.setQuantity(1);
 		wd.setAddedAt(LocalDateTime.now());
 		wd.setProduct(product);
-		wd.setStatus(WishlistProductStatus.Added);
+		
 		wd.setWishlist(wishlist);
 		product.getWishlistDetails().add(wd);
 		wishlist.getWishlistDetails().add(wd);
 		
 		
+		wdrepo.save(wd);
 	    wrepo.save(wishlist);
 		
 		return "Item added in wishlist sucessfully";
@@ -102,11 +112,29 @@ public class WishlistServiceImpl implements WishlistService {
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
 		List<WishlistDetails> wlist= wishlist.getWishlistDetails();
 		
-		boolean res=wlist.removeIf(ob->ob.getProduct().getPid()==pid);
+		boolean res= false; WishlistDetails obDetails=null;
+		for(WishlistDetails wd:wlist)
+		{ 
+			if(wd.getProduct().getPid().equals(pid))
+			{
+				obDetails=wd;
+				break;
+			}
+		}
 		
-		wishlist.setWishlistDetails(wlist);
+		if(obDetails!=null)
+		{
+			wlist.remove(obDetails);
+			wishlist.setWishlistDetails(wlist);
+			wrepo.save(wishlist);
+			wdrepo.delete(obDetails);
+			res=true;
+		}
 		
-		wrepo.save(wishlist);
+		
+		
+		
+		
 		
 		if(res==true)
 		return "Item has been removed from the wishlist";

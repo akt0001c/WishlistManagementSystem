@@ -34,15 +34,15 @@ public class WishlistDetails {
 	@Column(nullable=false,columnDefinition="INT default 1")
 	private Integer quantity;
 	
-	@Column(columnDefinition="enum('Added','Purcheshed') default 'Added' ")
-	private WishlistProductStatus status;
+
+	
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="product_id")
 	private Product product;
 	
 	@JsonIgnore
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="wishlist_id")
 	private Wishlist wishlist;
 	
