@@ -29,7 +29,7 @@ CREATE TABLE `product` (
   `description` text,
   `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'testing','product test name 1','This is the product description','2024-02-20 06:44:45'),(52,'testing second','product test name 2','This is the product description','2024-02-20 07:22:37');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +60,7 @@ CREATE TABLE `product_seq` (
 
 LOCK TABLES `product_seq` WRITE;
 /*!40000 ALTER TABLE `product_seq` DISABLE KEYS */;
-INSERT INTO `product_seq` VALUES (1);
+INSERT INTO `product_seq` VALUES (151);
 /*!40000 ALTER TABLE `product_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +133,6 @@ CREATE TABLE `wishlist_details` (
   `wd_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
   `wishlist_id` int NOT NULL,
-  `status` enum('Added','Purchesed') DEFAULT 'Added',
   `quantity` int NOT NULL DEFAULT '1',
   `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`wd_id`),
@@ -140,7 +140,7 @@ CREATE TABLE `wishlist_details` (
   KEY `wishlist_id` (`wishlist_id`),
   CONSTRAINT `wishlist_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `wishlist_details_ibfk_2` FOREIGN KEY (`wishlist_id`) REFERENCES `wishlist` (`wid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,6 +149,7 @@ CREATE TABLE `wishlist_details` (
 
 LOCK TABLES `wishlist_details` WRITE;
 /*!40000 ALTER TABLE `wishlist_details` DISABLE KEYS */;
+INSERT INTO `wishlist_details` VALUES (4,52,4,1,'2024-02-20 07:24:51');
 /*!40000 ALTER TABLE `wishlist_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-20  9:54:58
+-- Dump completed on 2024-02-20 13:20:30
