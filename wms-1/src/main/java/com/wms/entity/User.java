@@ -34,7 +34,7 @@ public class User {
 
 @Id
 @GeneratedValue(strategy= GenerationType.IDENTITY)
-@Column(name="userId")
+@Column(name="user_id")
  private Integer userId;
  
  @Column(name="email", nullable=false ,unique=true )
@@ -48,7 +48,7 @@ public class User {
  
  @Column(nullable=false)
  @NotEmpty(message="Password cannot be empty or null")
- @Pattern(regexp="^[A-Za-z0-9@#]{1,10}$")
+ //@Pattern(regexp="^[A-Za-z0-9@#]{1,10}$")
  @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
  private String password;
  
@@ -62,10 +62,10 @@ public class User {
  private String location;
  
  @Enumerated(EnumType.STRING)
- @Column(nullable=false ,columnDefinition= "enum('Active','Inactive') default 'Active'" )
+ @Column(columnDefinition= "enum('Active','Inactive') default 'Active'" )
  private UserStatus status;
  
- @Column(name="addedAt")
+ @Column(name="added_at", columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
  @Temporal(TemporalType.TIMESTAMP)
  private LocalDateTime addedAt;
  

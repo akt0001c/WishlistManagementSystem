@@ -1,5 +1,6 @@
 package com.wms.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.wms.entity.Product;
 import com.wms.entity.User;
 import com.wms.entity.Wishlist;
 import com.wms.entity.WishlistDetails;
+import com.wms.entity.WishlistProductStatus;
 import com.wms.exceptions.ProductNotFoundException;
 import com.wms.exceptions.SomethingwentWrongException;
 import com.wms.exceptions.UserNotLoggedException;
@@ -17,6 +19,8 @@ import com.wms.repository.UserRepository;
 import com.wms.repository.WishlistRepository;
 import com.wms.service.WishlistService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service 
 public class WishlistServiceImpl implements WishlistService {
 
@@ -55,7 +59,9 @@ public class WishlistServiceImpl implements WishlistService {
 		Product product = prepo.findById(pid).orElseThrow(()->new ProductNotFoundException("Product not found for id :"+pid));
 		wishlist.setUser(user);
 		WishlistDetails wd= new WishlistDetails();
+		wd.setAddedAt(LocalDateTime.now());
 		wd.setProduct(product);
+		wd.setStatus(WishlistProductStatus.Added);
 		wd.setWishlist(wishlist);
 		product.getWishlistDetails().add(wd);
 		wishlist.getWishlistDetails().add(wd);
@@ -75,8 +81,10 @@ public class WishlistServiceImpl implements WishlistService {
 	 */
 	@Override
 	public Wishlist getAllWishListItem(String email) {
+		log.info("Service method to get complete wishlist started...");
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
+		log.info("Service method response wishlist found successfully.");
 		return wishlist;
 	}
 

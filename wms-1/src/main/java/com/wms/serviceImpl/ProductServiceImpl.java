@@ -1,5 +1,6 @@
 package com.wms.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class ProductServiceImpl implements ProductService {
 		
 		log.info("service for adding product started...");
 		Product res=null;
+		product.setAddedAt(LocalDateTime.now());
+		
 		res= prepo.save(product);
 		log.info("service response, product added sucessfully");
 		return res;

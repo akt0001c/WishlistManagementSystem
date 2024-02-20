@@ -15,6 +15,7 @@ import com.wms.entity.User;
 @Repository
 public interface WishlistRepository extends JpaRepository<Wishlist,Integer>{
 	
-	@Query("select w from Wishlist w where w.user=?1 ")
-	Optional<Wishlist>  findByUser(Integer userId);
+	@Query("select w from Wishlist w where w.user.userId=?1 ")
+	Optional<Wishlist>  findByUser(Integer user_id);
 }
+

@@ -64,7 +64,7 @@ public class AppConfig {
 			     .anyRequest().authenticated();
 		 })
 		 
-		 .csrf(csrf->csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("users/signUp").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+		 .csrf(csrf->csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/api/signUp").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
 			 .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 			  .addFilterAfter(new CsrfCookieFilter(),BasicAuthenticationFilter.class)
 			  .addFilterAfter(new JwtTokenGeneratorFilter(),CsrfCookieFilter.class )

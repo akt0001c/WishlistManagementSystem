@@ -1,11 +1,13 @@
 package com.wms.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wms.entity.User;
+import com.wms.entity.UserStatus;
 import com.wms.entity.Wishlist;
 import com.wms.exceptions.OperationFaliureException;
 import com.wms.exceptions.UserAlreadyExistException;
@@ -37,7 +39,12 @@ public class UserServiceImpl implements UserService {
 		
 		User res=null;
 		Wishlist ws= new Wishlist();
+		ws.setCreatedAt(LocalDateTime.now());
 		 user.setWishlist(ws);
+		 ws.setUser(user);
+		 user.setAddedAt(LocalDateTime.now());
+		 user.setStatus(UserStatus.Active);
+		 
 		 res= urepo.save(user);
 		 
 		 if(res==null)

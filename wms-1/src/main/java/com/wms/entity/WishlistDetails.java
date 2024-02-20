@@ -28,7 +28,7 @@ public class WishlistDetails {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="wdId")
+	@Column(name="wd_id")
 	private Integer wdId;
 	
 	@Column(nullable=false,columnDefinition="INT default 1")
@@ -47,6 +47,7 @@ public class WishlistDetails {
 	private Wishlist wishlist;
 	
 	
+	@Column(name="added_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime addedAt;
 	

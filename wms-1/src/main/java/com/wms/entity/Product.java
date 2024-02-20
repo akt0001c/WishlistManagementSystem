@@ -45,7 +45,7 @@ public class Product {
 	
 	
 	
-	@Column(name="addedAt")
+	@Column(name="added_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime addedAt;
 	
