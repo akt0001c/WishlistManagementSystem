@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wms.entity.Product;
 import com.wms.service.ProductService;
@@ -71,12 +72,36 @@ public class ProductControllerTest {
     
     
     @Test
-    public void getProduct_shouldReturnProductList() {
+    @DisplayName("Product list can be returned")
+    public void getProduct_shouldReturnProductList() throws Exception {
     	List<Product> res= new ArrayList<>();
     	res.add(responseProduct);
-    	Mockito.when(pservices.getAllProduct(null,null,null,null)).thenReturn(res);
+    	Mockito.when(pservices.getAllProduct(Mockito.any(),Mockito.any(),Mockito.any(),Mockito.any())).thenReturn(res);
     	
-    	RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/get/products");
+    	RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/get/products").contentType(MediaType.APPLICATION_JSON_VALUE);
+    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(status().isAccepted()).andReturn();
+    	String responseBody = mvcResult.getResponse().getContentAsString();
+    	List<Product> response= new ObjectMapper().readValue(responseBody,new TypeReference<List<Product>>() {});
+    	
+    	Assertions.assertNotNull(response,"Product list is empty");
+    	Mockito.verify(pservices,Mockito.times(1)).getAllProduct(Mockito.any(),Mockito.any() , Mockito.any(), Mockito.any());
+    	
+    	
+    }
+    
+   
+    @Test
+    @DisplayName("Product can be removed")
+    public void testRemoveProduct_shouldRemoveProduct() throws Exception {
+    	Mockito.when(pservices.removeProduct(Mockito.anyInt())).thenReturn(responseProduct);
+    	
+    	
+    	RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/product/{pid}",1).contentType(MediaType.APPLICATION_JSON_VALUE);
+    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(status().isAccepted()).andReturn();
+    	String responseBody = mvcResult.getResponse().getContentAsString();
+    	Product response = new ObjectMapper().readValue(responseBody, Product.class);
+    	Mockito.verify(pservices,Mockito.times(1)).removeProduct(Mockito.anyInt());
+    	Assertions.assertNotNull(response,"Product returned is null");
     }
 	
 }

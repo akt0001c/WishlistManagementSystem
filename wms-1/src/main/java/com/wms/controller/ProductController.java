@@ -79,7 +79,7 @@ public class ProductController {
 	 * @return ResponseEntiy of type product which has been removed from the database
 	 */
 	@DeleteMapping("/product/{pid}")
-	public ResponseEntity<Product> remove(@PathVariable("pid") Integer pid){
+	public ResponseEntity<Product> removeProduct(@PathVariable("pid") Integer pid){
 		
 		log.info("controller for removing product started....");
 		Product res= pservice.removeProduct(pid);
