@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,6 +71,24 @@ public class ProductControllerTest {
 		
 	}
     
+    @Test
+    @DisplayName("MethodArgumentNotValid exception for invalid url can be thrown")
+    public void testAddProduct_whenInvalidProductUrlPassedShouldthrowMethodArgumentNotValidException() throws Exception {
+    	Mockito.when(pservices.addProduct(Mockito.any(Product.class))).thenReturn(responseProduct);
+    	requestProduct.setPimage("");
+    	RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/add/product").content(new ObjectMapper().writeValueAsString(requestProduct)).contentType(MediaType.APPLICATION_JSON_VALUE);
+    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+    }
+    
+    @Test
+    @DisplayName("MethodArgumentNotValid exception for invalid product name can be thrown")
+    public void testAddProduct_whenInvalidProductNamePassedShouldthrowMethodArgumentNotValidException() throws Exception {
+    	Mockito.when(pservices.addProduct(Mockito.any(Product.class))).thenReturn(responseProduct);
+    	requestProduct.setPname(null);
+    	RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/add/product").content(new ObjectMapper().writeValueAsString(requestProduct)).contentType(MediaType.APPLICATION_JSON_VALUE);
+    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+    }
+    
     
     @Test
     @DisplayName("Product list can be returned")
@@ -103,5 +122,8 @@ public class ProductControllerTest {
     	Mockito.verify(pservices,Mockito.times(1)).removeProduct(Mockito.anyInt());
     	Assertions.assertNotNull(response,"Product returned is null");
     }
+    
+    
+    
 	
 }
