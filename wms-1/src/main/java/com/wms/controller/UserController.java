@@ -1,3 +1,5 @@
+
+
 package com.wms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wms.entity.User;
+import com.wms.exceptions.UserNotLoggedException;
 import com.wms.service.UserService;
 
 import jakarta.validation.Valid;
@@ -61,7 +64,12 @@ private UserService uservice;
   @GetMapping("/logIn")
   public ResponseEntity<String> logIn(Authentication auth ){
 	   log.info("User login started...");
-	   String res=null;
+	   
+	   if(auth.getName().equals(""))
+		     throw new UserNotLoggedException("User should login first");
+	   
+	   
+	   String res=null; 
 	   User user= uservice.getUserDetails(auth.getName());
 	   res= user.getName()+" "+"Logged in successfully";
 	   

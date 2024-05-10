@@ -77,7 +77,7 @@ public class ProductControllerTest {
     	Mockito.when(pservices.addProduct(Mockito.any(Product.class))).thenReturn(responseProduct);
     	requestProduct.setPimage("");
     	RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/add/product").content(new ObjectMapper().writeValueAsString(requestProduct)).contentType(MediaType.APPLICATION_JSON_VALUE);
-    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+    	 mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
     }
     
     @Test
@@ -86,7 +86,7 @@ public class ProductControllerTest {
     	Mockito.when(pservices.addProduct(Mockito.any(Product.class))).thenReturn(responseProduct);
     	requestProduct.setPname(null);
     	RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/add/product").content(new ObjectMapper().writeValueAsString(requestProduct)).contentType(MediaType.APPLICATION_JSON_VALUE);
-    	MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+    	 mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
     }
     
     
