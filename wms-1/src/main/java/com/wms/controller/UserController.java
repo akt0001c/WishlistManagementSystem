@@ -73,7 +73,7 @@ private UserService uservice;
 	   User user= uservice.getUserDetails(auth.getName());
 	   res= user.getName()+" "+"Logged in successfully";
 	   
-	   log.info(user.getName()+"login sucessfull");
+	   log.info(user.getName()+" login sucessfull");
 	   return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
   }
 }

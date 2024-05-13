@@ -3,6 +3,7 @@ package com.wms.controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,11 +20,15 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wms.entity.User;
 import com.wms.entity.UserStatus;
 import com.wms.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @WebMvcTest(controllers=UserController.class)
 @AutoConfigureMockMvc(addFilters=false)
 public class UserControllerTest {
@@ -42,6 +47,7 @@ public class UserControllerTest {
 	private User responseUser;
 	
 	
+	@BeforeEach
 	public void init() {
 		requestUser= new User();
 		requestUser.setName("Ankit");
@@ -72,7 +78,9 @@ public class UserControllerTest {
 	 Mockito.when(pencoder.encode(Mockito.anyString())).thenReturn(responseUser.getPassword());
 	 Mockito.when(uservice.registerUser(Mockito.any(User.class))).thenReturn(responseUser);
 	 
-	 RequestBuilder requestBuilder = MockMvcRequestBuilders.post("api/signUp").content(new ObjectMapper().writeValueAsString(requestUser)).contentType(MediaType.APPLICATION_JSON_VALUE);
+	 log.error("Password :"+requestUser.getPassword());
+	 String jsonPayload = "{\"email\":\"" + requestUser.getEmail() + "\",\"name\":\"" + requestUser.getName() + "\",\"password\":\"" + requestUser.getPassword() + "\",\"mobno\":\"" + requestUser.getMobno() + "\",\"location\":\"" + requestUser.getLocation() + "\"}";
+	 RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/signUp").content(jsonPayload).contentType(MediaType.APPLICATION_JSON_VALUE);
 	 MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
 	 
 	 String responseBody = mvcResult.getResponse().getContentAsString();
@@ -91,14 +99,15 @@ public class UserControllerTest {
  @DisplayName("User can login succesfully")
  public void testLogIn_Success() throws Exception{
 	 Mockito.when(uservice.getUserDetails(Mockito.anyString())).thenReturn(responseUser);
-	 RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/logIn").contentType(MediaType.APPLICATION_JSON_VALUE);
+	 RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/logIn").principal(auth).contentType(MediaType.APPLICATION_JSON_VALUE);
 	 MvcResult mvcResult= mockMvc.perform(requestBuilder).andExpect(status().isAccepted()).andReturn();
 	 
 	 
 	 String response= mvcResult.getResponse().getContentAsString();
 	 
 	 Assertions.assertNotNull(response,"message cannot be null");
-	 
+	
+	 Mockito.verify(uservice,Mockito.times(1)).getUserDetails(Mockito.anyString());
 	 
 	 
 	 

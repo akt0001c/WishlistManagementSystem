@@ -64,8 +64,11 @@ public class ProductController {
 	@GetMapping("/get/products")
 	public ResponseEntity<List<Product>> getProducts(@RequestParam( value= "field",required=false) String field, @RequestParam( value= "dir" ,required=false) String direction , @RequestParam( value="pageno", required=false) Integer pageno, @RequestParam( value="records" , required=false) Integer records){
 		
+	
 		log.info("controller for getting all products started...");
-		List<Product> res= pservice.getAllProduct(field,direction,pageno,records);
+		
+	    List<Product> res= pservice.getAllProduct(field,direction,pageno,records);
+		
 		log.info("Product controller response , all product found sucessfully");
 		return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
 	}
