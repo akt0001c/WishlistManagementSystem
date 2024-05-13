@@ -19,9 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wms.entity.User;
 import com.wms.entity.UserStatus;
@@ -78,7 +77,7 @@ public class UserControllerTest {
 	 Mockito.when(pencoder.encode(Mockito.anyString())).thenReturn(responseUser.getPassword());
 	 Mockito.when(uservice.registerUser(Mockito.any(User.class))).thenReturn(responseUser);
 	 
-	 log.error("Password :"+requestUser.getPassword());
+	
 	 String jsonPayload = "{\"email\":\"" + requestUser.getEmail() + "\",\"name\":\"" + requestUser.getName() + "\",\"password\":\"" + requestUser.getPassword() + "\",\"mobno\":\"" + requestUser.getMobno() + "\",\"location\":\"" + requestUser.getLocation() + "\"}";
 	 RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/signUp").content(jsonPayload).contentType(MediaType.APPLICATION_JSON_VALUE);
 	 MvcResult mvcResult = mockMvc.perform(requestBuilder).andExpect(status().isCreated()).andReturn();
@@ -93,6 +92,38 @@ public class UserControllerTest {
 	 
 	 
  }
+ 
+ 
+ 
+ @Test
+ @DisplayName("When invalid  name passed Exception can be thrown")
+ public void testSignUp_WhenInvalidNamePassedExceptionshouldBeThrown() throws Exception{
+	
+	 
+	  requestUser.setPassword("");
+	 String jsonPayload = "{\"email\":\"" + requestUser.getEmail() + "\",\"name\":\"" + requestUser.getName() + "\",\"password\":\"" + requestUser.getPassword() + "\",\"mobno\":\"" + requestUser.getMobno() + "\",\"location\":\"" + requestUser.getLocation() + "\"}";
+	 RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/signUp").content(jsonPayload).contentType(MediaType.APPLICATION_JSON_VALUE);
+	 mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+	
+	 
+	 
+ }
+ 
+ @Test
+ @DisplayName("When invalid  email passed Exception can be thrown")
+ public void testSignUp_WhenInvalidemailssedExceptionshouldBeThrown() throws Exception{
+	
+	 
+	  requestUser.setEmail("");
+	 String jsonPayload = "{\"email\":\"" + requestUser.getEmail() + "\",\"name\":\"" + requestUser.getName() + "\",\"password\":\"" + requestUser.getPassword() + "\",\"mobno\":\"" + requestUser.getMobno() + "\",\"location\":\"" + requestUser.getLocation() + "\"}";
+	 RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/signUp").content(jsonPayload).contentType(MediaType.APPLICATION_JSON_VALUE);
+	 mockMvc.perform(requestBuilder).andExpect(result->Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException)).andReturn();
+	
+	 
+	 
+ }
+ 
+ 
  
  
  @Test
