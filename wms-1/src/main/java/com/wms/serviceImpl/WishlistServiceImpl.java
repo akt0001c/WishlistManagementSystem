@@ -10,7 +10,6 @@ import com.wms.entity.Product;
 import com.wms.entity.User;
 import com.wms.entity.Wishlist;
 import com.wms.entity.WishlistDetails;
-import com.wms.entity.WishlistProductStatus;
 import com.wms.exceptions.ProductNotFoundException;
 import com.wms.exceptions.SomethingwentWrongException;
 import com.wms.exceptions.UserNotLoggedException;

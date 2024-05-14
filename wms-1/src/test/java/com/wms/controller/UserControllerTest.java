@@ -26,8 +26,6 @@ import com.wms.entity.User;
 import com.wms.entity.UserStatus;
 import com.wms.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
-@Slf4j
 @WebMvcTest(controllers=UserController.class)
 @AutoConfigureMockMvc(addFilters=false)
 public class UserControllerTest {
