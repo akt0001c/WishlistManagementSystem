@@ -91,8 +91,10 @@ public class WishlistServiceImpl implements WishlistService {
 	@Override
 	public Wishlist getAllWishListItem(String email) {
 		log.info("Service method to get complete wishlist started...");
+		
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
+		
 		log.info("Service method response wishlist found successfully.");
 		return wishlist;
 	}
@@ -107,8 +109,15 @@ public class WishlistServiceImpl implements WishlistService {
 	 */
 	@Override
 	public String removeItem(Integer pid, String email) {
+		
+		log.info("Service method removeItem started...");
+		
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
+		if(pid==null)
+			  throw new SomethingwentWrongException("Product id cannot be null");
+		
+		
 		List<WishlistDetails> wlist= wishlist.getWishlistDetails();
 		
 		boolean res= false; WishlistDetails obDetails=null;
@@ -136,8 +145,12 @@ public class WishlistServiceImpl implements WishlistService {
 		
 		
 		if(res==true)
+		{
+			log.info("Item removed from wishlist successfully.");
 		return "Item has been removed from the wishlist";
+		}
 		else {
+			log.error("Item cannot be removed");
 			return "Item cannot be removed";
 		}
 	}
