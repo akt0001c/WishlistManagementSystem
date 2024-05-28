@@ -170,6 +170,21 @@ public class WishlistServiceImplTest {
 		
 	}
 	
+	@Test
+	@DisplayName("Method should throw SomethingWentWrongExcetion on invalid product id")
+	void removeItemTest_WhenInvalidProductIdPassedShouldThrowSomethingWentWrongException() {
+	
+		Assertions.assertThrows(SomethingwentWrongException.class,()->wservice.removeItem(null, "ankit@gmail.com"));
+	}
+	
+	
+	@Test
+	@DisplayName("Method should throw UserNotLoggedException on invalid or null email id")
+	void removeItemTest_WhenInvalidEmailPassedShouldThrowUserNotLoggedException() {
+		
+		
+	}
+	
 	
 	
 	

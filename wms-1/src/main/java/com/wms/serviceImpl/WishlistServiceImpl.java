@@ -111,11 +111,12 @@ public class WishlistServiceImpl implements WishlistService {
 	public String removeItem(Integer pid, String email) {
 		
 		log.info("Service method removeItem started...");
+		if(pid==null)
+			  throw new SomethingwentWrongException("Product id cannot be null");
 		
 		User user= urepo.findByEmail(email).orElseThrow(()->new UserNotLoggedException("User shouble be logged in "));
 		Wishlist wishlist= wrepo.findByUser(user.getUserId()).orElseThrow(()->new SomethingwentWrongException("wishlist not found for the logged user"));
-		if(pid==null)
-			  throw new SomethingwentWrongException("Product id cannot be null");
+		
 		
 		
 		List<WishlistDetails> wlist= wishlist.getWishlistDetails();
