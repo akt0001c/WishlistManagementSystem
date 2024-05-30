@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.wms.entity.Product;
+import com.wms.exceptions.OperationFaliureException;
 import com.wms.exceptions.ProductNotFoundException;
 import com.wms.repository.ProductRepository;
 import com.wms.service.ProductService;
@@ -32,6 +33,10 @@ public class ProductServiceImpl implements ProductService {
 	public Product addProduct(Product product) {
 		
 		log.info("service for adding product started...");
+		
+		if(product==null)
+			  throw new OperationFaliureException("Null or invalid product passed");
+		
 		Product res=null;
 		product.setAddedAt(LocalDateTime.now());
 		
@@ -43,6 +48,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product removeProduct(Integer pid) {
 		log.info("Service for removing product started...");
+		
+		if(pid==null)
+			  throw new OperationFaliureException("Null or invalid product id passed");
+		
 		Product res= prepo.findById(pid).orElseThrow(()->new ProductNotFoundException("Product not found or invalid prouct id :"+pid));
 		prepo.delete(res);
 		

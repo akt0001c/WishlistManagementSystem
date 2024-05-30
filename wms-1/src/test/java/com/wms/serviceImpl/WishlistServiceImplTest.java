@@ -181,11 +181,30 @@ public class WishlistServiceImplTest {
 	@Test
 	@DisplayName("Method should throw UserNotLoggedException on invalid or null email id")
 	void removeItemTest_WhenInvalidEmailPassedShouldThrowUserNotLoggedException() {
-		
+		Mockito.when(urepo.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+		Assertions.assertThrows(UserNotLoggedException.class, ()->wservice.removeItem(product.getPid(), "ankit@gmail.com"));
 		
 	}
 	
-	
+	@Test
+	@DisplayName("Method can return else message")
+	void removeItemTest_WhenproductNotFoundInWishlistshouldProductNotFoundMessage() {
+		WishlistDetails wd= new WishlistDetails();
+		product.setPid(31);
+		wd.setProduct(product);
+		
+		List<WishlistDetails> list = new ArrayList<>();
+		list.add(wd);
+		wishlist.setWishlistDetails(list);
+		
+		Mockito.when(urepo.findByEmail(Mockito.anyString())).thenReturn(Optional.of(user));
+		Mockito.when(wrepo.findByUser(Mockito.anyInt())).thenReturn(Optional.of(wishlist));
+		
+	    
+	    String response= wservice.removeItem(21, "ankit@gmail.com");
+	    Assertions.assertNotNull(response, "Other resonse cannot be null");
+	    Assertions.assertEquals("Item cannot be removed", response,"Excepected message should be same as in else block");
+	}
 	
 	
 	
